@@ -31,3 +31,17 @@ if (typeof detail.showModal === 'function') {
     if (event.target === detail) detail.close();
   });
 }
+
+if ('IntersectionObserver' in window) {
+  const sectionIntro = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('section-intro-visible');
+        sectionIntro.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+
+  document.querySelectorAll('.years, #services-title, #contact-title')
+    .forEach(heading => sectionIntro.observe(heading));
+}
